@@ -1,0 +1,9 @@
+using HospitalManagementSystem.Infrastructure;
+
+namespace HospitalManagementSystem.Forms;
+partial class DoctorForm
+{
+    private System.ComponentModel.IContainer components;private TextBox txtSearch;private ComboBox cmbDepartment;private DataGridView dgvDoctors;private Label lblStatus;private Button btnSearch,btnClear,btnAdd,btnEdit,btnDelete;
+    protected override void Dispose(bool disposing){if(disposing)components?.Dispose();base.Dispose(disposing);}
+    private void InitializeComponent(){components=new System.ComponentModel.Container();txtSearch=new TextBox{Name="txtSearch",Dock=DockStyle.Fill};cmbDepartment=new ComboBox{Name="cmbDepartment",DropDownStyle=ComboBoxStyle.DropDownList,Dock=DockStyle.Fill};dgvDoctors=new DataGridView{Dock=DockStyle.Fill};lblStatus=new Label{AutoSize=true};btnSearch=new Button{Text="Search"};btnClear=new Button{Text="Clear"};btnAdd=new Button{Text="Add"};btnEdit=new Button{Text="Edit"};btnDelete=new Button{Text="Delete"};var top=new TableLayoutPanel{Dock=DockStyle.Top,Height=75,ColumnCount=4,RowCount=2,Padding=new Padding(8)};top.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,100));top.Controls.Add(txtSearch,0,0);top.Controls.Add(cmbDepartment,0,1);top.Controls.Add(btnSearch,1,0);top.Controls.Add(btnClear,2,0);var bottom=new FlowLayoutPanel{Dock=DockStyle.Bottom,Height=45,Padding=new Padding(8)};bottom.Controls.Add(btnAdd);bottom.Controls.Add(btnEdit);bottom.Controls.Add(btnDelete);bottom.Controls.Add(lblStatus);Controls.Add(dgvDoctors);Controls.Add(top);Controls.Add(bottom);btnSearch.Click+=(_,_)=>LoadData();btnClear.Click+=(_,_)=>{txtSearch.Clear();cmbDepartment.SelectedIndex=0;LoadData();};cmbDepartment.SelectedIndexChanged+=(_,_)=>LoadData();dgvDoctors.DoubleClick+=dgvDoctors_DoubleClick;btnAdd.Click+=btnAdd_Click;btnEdit.Click+=btnEdit_Click;btnDelete.Click+=btnDelete_Click;Theme.ApplyGridStyle(dgvDoctors);Dock=DockStyle.Fill;Text="Doctors";}
+}
