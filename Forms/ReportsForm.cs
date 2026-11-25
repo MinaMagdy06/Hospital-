@@ -15,7 +15,14 @@ public partial class ReportsForm : Form
     private CancellationTokenSource _cts;
     private ReportResult _report;
 
-    public ReportsForm() { InitializeComponent(); }
+    public ReportsForm() { InitializeComponent(); ApplyRuntimeSettings(); }
+
+    /// <summary>Initial selection and theme styling that the designer cannot express.</summary>
+    private void ApplyRuntimeSettings()
+    {
+        cmbType.SelectedIndex = 0;
+        Theme.ApplyGridStyle(grid);
+    }
 
     private async void btnLoad_Click(object sender, EventArgs e)
     {

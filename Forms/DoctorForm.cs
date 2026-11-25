@@ -8,7 +8,15 @@ namespace HospitalManagementSystem.Forms;
 public partial class DoctorForm:Form
 {
     private readonly DoctorService _service=new(new Data.DoctorRepository()); private readonly DepartmentService _departments=new(new Data.DepartmentRepository()); private List<Doctor> _items=new();
-    public DoctorForm(bool readOnly = false){InitializeComponent();btnAdd.Visible=!readOnly;btnEdit.Visible=!readOnly;btnDelete.Visible=!readOnly;LoadDepartments();LoadData();}
+    public DoctorForm(bool readOnly = false){InitializeComponent();ApplyRuntimeSettings();btnAdd.Visible=!readOnly;btnEdit.Visible=!readOnly;btnDelete.Visible=!readOnly;LoadDepartments();LoadData();}
+    /// <summary>Theme styling and event wiring that the designer cannot express.</summary>
+    private void ApplyRuntimeSettings()
+    {
+        btnSearch.Click += (_, _) => LoadData();
+        btnClear.Click += (_, _) => { txtSearch.Clear(); cmbDepartment.SelectedIndex = 0; LoadData(); };
+        cmbDepartment.SelectedIndexChanged += (_, _) => LoadData();
+        Theme.ApplyGridStyle(dgvDoctors);
+    }
     private void LoadDepartments(){cmbDepartment.Items.Clear();cmbDepartment.Items.Add(new Department{Id=0,Name="All"});foreach(var d in _departments.Search(null))cmbDepartment.Items.Add(d);cmbDepartment.DisplayMember="Name";cmbDepartment.SelectedIndex=0;}
     private void LoadData(){try{var d=(Department)cmbDepartment.SelectedItem;_items=_service.Search(txtSearch.Text,d?.Id>0?d.Id:null);dgvDoctors.DataSource=_items.Select(x=>new{x.Id,x.FullName,x.Specialization,Department=x.DepartmentName,x.Phone,x.Email}).ToList();lblStatus.Text=$"{_items.Count} doctors found";}catch(AppException ex){MessageService.ShowError(ex.UserMessage);}}
     private Doctor Selected()=>dgvDoctors.CurrentRow==null?null:_items[dgvDoctors.CurrentRow.Index];

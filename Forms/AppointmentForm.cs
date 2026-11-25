@@ -14,7 +14,19 @@ public partial class AppointmentForm : Form
     private List<AppointmentView> _items = new();
     private readonly bool _readOnly;
 
-    public AppointmentForm(bool readOnly = false) { _readOnly = readOnly; InitializeComponent(); LoadFilters(); LoadData(); }
+    public AppointmentForm(bool readOnly = false) { _readOnly = readOnly; InitializeComponent(); ApplyRuntimeSettings(); LoadFilters(); LoadData(); }
+
+    /// <summary>Theme styling and event wiring that the designer cannot express.</summary>
+    private void ApplyRuntimeSettings()
+    {
+        btnSearch.Click += (_, _) => LoadData();
+        btnClear.Click += (_, _) => { txtSearch.Clear(); dtpFrom.Checked = false; dtpTo.Checked = false; cmbDoctor.SelectedIndex = 0; cmbDepartment.SelectedIndex = 0; cmbStatus.SelectedIndex = 0; LoadData(); };
+        txtSearch.KeyDown += (_, e) => { if (e.KeyCode == Keys.Enter) LoadData(); };
+        cmbDoctor.SelectedIndexChanged += (_, _) => { if (IsHandleCreated) LoadData(); };
+        cmbDepartment.SelectedIndexChanged += (_, _) => { if (IsHandleCreated) LoadData(); };
+        cmbStatus.SelectedIndexChanged += (_, _) => { if (IsHandleCreated) LoadData(); };
+        Theme.ApplyGridStyle(dgvAppointments);
+    }
 
     private void LoadFilters()
     {

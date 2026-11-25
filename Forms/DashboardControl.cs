@@ -11,7 +11,18 @@ public partial class DashboardControl : UserControl
 {
     private readonly ReportService _service = new(new Data.ReportRepository());
     private CancellationTokenSource _cts;
-    public DashboardControl() { InitializeComponent(); Load += async (_, _) => await LoadDashboardAsync(); }
+    public DashboardControl() { InitializeComponent(); ApplyRuntimeSettings(); Load += async (_, _) => await LoadDashboardAsync(); }
+
+    /// <summary>Theme styling and event wiring that the designer cannot express.</summary>
+    private void ApplyRuntimeSettings()
+    {
+        foreach (var label in new[] { lblPatients, lblDoctors, lblDepartments, lblUpcoming }) label.ForeColor = Theme.Primary;
+        top.Resize += (_, _) => btnRefresh.Left = top.Width - btnRefresh.Width;
+        btnRefresh.Left = top.Width - btnRefresh.Width; // same value the Resize handler produced while the control was being docked
+        btnRefresh.Click += async (_, _) => await LoadDashboardAsync();
+        Theme.ApplyGridStyle(gridUpcoming);
+        BackColor = Theme.ContentBackground;
+    }
 
     private async Task LoadDashboardAsync()
     {

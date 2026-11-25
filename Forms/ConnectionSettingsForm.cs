@@ -6,7 +6,13 @@ namespace HospitalManagementSystem.Forms;
 /// <summary>Edits and tests the SQL Server connection settings.</summary>
 public partial class ConnectionSettingsForm : Form
 {
-    public ConnectionSettingsForm() { InitializeComponent(); LoadSettings(); }
+    public ConnectionSettingsForm() { InitializeComponent(); ApplyRuntimeSettings(); LoadSettings(); }
+
+    /// <summary>Wiring the Windows Forms designer cannot express.</summary>
+    private void ApplyRuntimeSettings()
+    {
+        btnCancel.Click += (_, _) => Close();
+    }
 
     private void LoadSettings()
     {

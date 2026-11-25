@@ -7,8 +7,8 @@ namespace HospitalManagementSystem.Controls;
 public class BarChartControl : Control
 {
     private List<ChartItem> _items = new();
-    public string Title { get; set; } = string.Empty;
-    public List<ChartItem> Items { get => _items; set { _items = value ?? new List<ChartItem>(); Invalidate(); } }
+    [System.ComponentModel.DefaultValue("")] public string Title { get; set; } = string.Empty;
+    [System.ComponentModel.Browsable(false), System.ComponentModel.DesignerSerializationVisibility(System.ComponentModel.DesignerSerializationVisibility.Hidden)] public List<ChartItem> Items { get => _items; set { _items = value ?? new List<ChartItem>(); Invalidate(); } }
 
     public BarChartControl()
     {

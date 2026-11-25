@@ -7,7 +7,17 @@ namespace HospitalManagementSystem.Forms;
 public partial class MainDashboardForm : Form
 {
     private Form _currentScreen;
-    public MainDashboardForm() { InitializeComponent(); ApplyRoleAccess(); Navigate("Dashboard"); }
+    public MainDashboardForm() { InitializeComponent(); ApplyRuntimeSettings(); ApplyRoleAccess(); Navigate("Dashboard"); }
+
+    /// <summary>Theme colors, header text and navigation wiring that the designer cannot express.</summary>
+    private void ApplyRuntimeSettings()
+    {
+        pnlSidebar.BackColor = Theme.Sidebar;
+        pnlContent.BackColor = Theme.ContentBackground;
+        foreach (var button in new[] { btnDashboard, btnPatients, btnDoctors, btnDepartments, btnAppointments, btnReports, btnConnection, btnLogout }) button.BackColor = Theme.Sidebar;
+        lblHeader.Text = $"Hospital Management System   |   Logged in as: {Session.CurrentUser?.Username} ({Session.CurrentUser?.Role})";
+        btnDashboard.Click += (_, _) => Navigate("Dashboard"); btnPatients.Click += (_, _) => Navigate("Patients"); btnDoctors.Click += (_, _) => Navigate("Doctors"); btnDepartments.Click += (_, _) => Navigate("Departments"); btnAppointments.Click += (_, _) => Navigate("Appointments"); btnReports.Click += (_, _) => Navigate("Reports");
+    }
 
     private void ApplyRoleAccess()
     {

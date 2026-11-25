@@ -3,6 +3,9 @@ namespace HospitalManagementSystem.Forms;
 partial class ConnectionSettingsForm
 {
     private System.ComponentModel.IContainer components;
+    private TableLayoutPanel layout;
+    private FlowLayoutPanel auth, buttons;
+    private Label lblServer, lblDatabase, lblAuthentication, lblUsername, lblPassword;
     private TextBox txtServer, txtDatabase, txtUsername, txtPassword;
     private RadioButton rbWindows, rbSql;
     private Button btnTest, btnSave, btnCancel;
@@ -12,26 +15,155 @@ partial class ConnectionSettingsForm
     private void InitializeComponent()
     {
         components = new System.ComponentModel.Container();
-        var layout = new TableLayoutPanel();
-        txtServer = new TextBox(); txtDatabase = new TextBox(); txtUsername = new TextBox(); txtPassword = new TextBox();
-        rbWindows = new RadioButton(); rbSql = new RadioButton();
-        btnTest = new Button(); btnSave = new Button(); btnCancel = new Button();
-        layout.Dock = DockStyle.Fill; layout.Padding = new Padding(20); layout.ColumnCount = 2; layout.RowCount = 7;
-        layout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 180)); layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
-        AddRow(layout, "Server", txtServer, 0); AddRow(layout, "Database", txtDatabase, 1);
-        rbWindows.Text = "Windows Authentication"; rbSql.Text = "SQL Authentication"; rbWindows.CheckedChanged += rbAuth_CheckedChanged; rbSql.CheckedChanged += rbAuth_CheckedChanged;
-        var auth = new FlowLayoutPanel { Dock = DockStyle.Fill, AutoSize = true }; auth.Controls.Add(rbWindows); auth.Controls.Add(rbSql); layout.Controls.Add(new Label { Text = "Authentication", AutoSize = true }, 0, 2); layout.Controls.Add(auth, 1, 2);
-        AddRow(layout, "Username", txtUsername, 3); AddRow(layout, "Password", txtPassword, 4); txtPassword.UseSystemPasswordChar = true;
-        var buttons = new FlowLayoutPanel { Dock = DockStyle.Fill, FlowDirection = FlowDirection.RightToLeft };
-        btnCancel.Text = "Cancel"; btnSave.Text = "Save"; btnTest.Text = "Test Connection";
-        btnCancel.DialogResult = DialogResult.Cancel; btnCancel.Click += (_, _) => Close(); btnSave.Click += btnSave_Click; btnTest.Click += btnTest_Click;
-        buttons.Controls.Add(btnCancel); buttons.Controls.Add(btnSave); buttons.Controls.Add(btnTest); layout.Controls.Add(buttons, 1, 6);
-        Controls.Add(layout); AcceptButton = btnSave; CancelButton = btnCancel; ClientSize = new Size(600, 330); MinimumSize = new Size(500, 300); StartPosition = FormStartPosition.CenterParent; Text = "Connection Settings";
-    }
-
-    private static void AddRow(TableLayoutPanel layout, string label, Control control, int row)
-    {
-        layout.Controls.Add(new Label { Text = label, AutoSize = true, Anchor = AnchorStyles.Left }, 0, row);
-        control.Dock = DockStyle.Fill; layout.Controls.Add(control, 1, row);
+        layout = new TableLayoutPanel();
+        txtServer = new TextBox();
+        txtDatabase = new TextBox();
+        txtUsername = new TextBox();
+        txtPassword = new TextBox();
+        rbWindows = new RadioButton();
+        rbSql = new RadioButton();
+        btnTest = new Button();
+        btnSave = new Button();
+        btnCancel = new Button();
+        lblServer = new Label();
+        lblDatabase = new Label();
+        lblAuthentication = new Label();
+        lblUsername = new Label();
+        lblPassword = new Label();
+        auth = new FlowLayoutPanel();
+        buttons = new FlowLayoutPanel();
+        //
+        // layout
+        //
+        layout.Dock = DockStyle.Fill;
+        layout.Padding = new Padding(20);
+        layout.ColumnCount = 2;
+        layout.RowCount = 7;
+        layout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 180F));
+        layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+        layout.Name = "layout";
+        layout.Controls.Add(lblServer, 0, 0);
+        layout.Controls.Add(txtServer, 1, 0);
+        layout.Controls.Add(lblDatabase, 0, 1);
+        layout.Controls.Add(txtDatabase, 1, 1);
+        layout.Controls.Add(lblAuthentication, 0, 2);
+        layout.Controls.Add(auth, 1, 2);
+        layout.Controls.Add(lblUsername, 0, 3);
+        layout.Controls.Add(txtUsername, 1, 3);
+        layout.Controls.Add(lblPassword, 0, 4);
+        layout.Controls.Add(txtPassword, 1, 4);
+        layout.Controls.Add(buttons, 1, 6);
+        //
+        // lblServer
+        //
+        lblServer.Name = "lblServer";
+        lblServer.Text = "Server";
+        lblServer.AutoSize = true;
+        lblServer.Anchor = AnchorStyles.Left;
+        //
+        // txtServer
+        //
+        txtServer.Name = "txtServer";
+        txtServer.Dock = DockStyle.Fill;
+        //
+        // lblDatabase
+        //
+        lblDatabase.Name = "lblDatabase";
+        lblDatabase.Text = "Database";
+        lblDatabase.AutoSize = true;
+        lblDatabase.Anchor = AnchorStyles.Left;
+        //
+        // txtDatabase
+        //
+        txtDatabase.Name = "txtDatabase";
+        txtDatabase.Dock = DockStyle.Fill;
+        //
+        // lblAuthentication
+        //
+        lblAuthentication.Name = "lblAuthentication";
+        lblAuthentication.Text = "Authentication";
+        lblAuthentication.AutoSize = true;
+        //
+        // auth
+        //
+        auth.Name = "auth";
+        auth.Dock = DockStyle.Fill;
+        auth.AutoSize = true;
+        auth.Controls.Add(rbWindows);
+        auth.Controls.Add(rbSql);
+        //
+        // rbWindows
+        //
+        rbWindows.Name = "rbWindows";
+        rbWindows.Text = "Windows Authentication";
+        rbWindows.CheckedChanged += rbAuth_CheckedChanged;
+        //
+        // rbSql
+        //
+        rbSql.Name = "rbSql";
+        rbSql.Text = "SQL Authentication";
+        rbSql.CheckedChanged += rbAuth_CheckedChanged;
+        //
+        // lblUsername
+        //
+        lblUsername.Name = "lblUsername";
+        lblUsername.Text = "Username";
+        lblUsername.AutoSize = true;
+        lblUsername.Anchor = AnchorStyles.Left;
+        //
+        // txtUsername
+        //
+        txtUsername.Name = "txtUsername";
+        txtUsername.Dock = DockStyle.Fill;
+        //
+        // lblPassword
+        //
+        lblPassword.Name = "lblPassword";
+        lblPassword.Text = "Password";
+        lblPassword.AutoSize = true;
+        lblPassword.Anchor = AnchorStyles.Left;
+        //
+        // txtPassword
+        //
+        txtPassword.Name = "txtPassword";
+        txtPassword.Dock = DockStyle.Fill;
+        txtPassword.UseSystemPasswordChar = true;
+        //
+        // buttons
+        //
+        buttons.Name = "buttons";
+        buttons.Dock = DockStyle.Fill;
+        buttons.FlowDirection = FlowDirection.RightToLeft;
+        buttons.Controls.Add(btnCancel);
+        buttons.Controls.Add(btnSave);
+        buttons.Controls.Add(btnTest);
+        //
+        // btnCancel
+        //
+        btnCancel.Name = "btnCancel";
+        btnCancel.Text = "Cancel";
+        btnCancel.DialogResult = DialogResult.Cancel;
+        //
+        // btnSave
+        //
+        btnSave.Name = "btnSave";
+        btnSave.Text = "Save";
+        btnSave.Click += btnSave_Click;
+        //
+        // btnTest
+        //
+        btnTest.Name = "btnTest";
+        btnTest.Text = "Test Connection";
+        btnTest.Click += btnTest_Click;
+        //
+        // ConnectionSettingsForm
+        //
+        Controls.Add(layout);
+        AcceptButton = btnSave;
+        CancelButton = btnCancel;
+        ClientSize = new Size(600, 330);
+        MinimumSize = new Size(500, 300);
+        StartPosition = FormStartPosition.CenterParent;
+        Text = "Connection Settings";
     }
 }
